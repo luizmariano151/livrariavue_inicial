@@ -1,31 +1,17 @@
 export default {
     enderecos: [
         {
-            cep: "58500-000",
-            cidade: "Monteiro",
-            rua:"rua do bujão",
-            numero:52,
-            bairro:"centro",
-            estado:"PB",
-            complemento:"casa"
+            id:"",
+            cep: "",
+            cidade: "",
+            rua:"",
+            numero: 0,
+            bairro:"",
+            estado:"",
+            complemento:""
         },
-        {
-            cep: "58500-000",
-            cidade: "Monteiro",
-            rua:"rua do bujão",
-            numero:52,
-            bairro:"centro",
-            estado:"PB",
-            complemento:"casa"
-        },
-        {
-            cep: "58500-000",
-            cidade: "Monteiro",
-            rua:"rua do bujão",
-            numero:52,
-            bairro:"centro",
-            estado:"PB",
-            complemento:"casa"
-        }
-    ]
+    ],
+    logado:false,
+    profile: null,
+    token: null
 }

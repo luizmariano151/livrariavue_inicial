@@ -9,10 +9,11 @@
             <h1 class="display-4">Lista de Endereços</h1>
           </div>
         </header>
-        <div class="listar-endereco" v-for="endereco in enderecos" :key="endereco.cep">
+        <div class="listar-endereco" v-for="endereco in enderecos" :key="endereco.id">
           <div class="card">
             <div class="card-header"></div>
             <div class="card-body">
+              <div>ID: {{ endereco.id }}</div>
               <div>CEP: {{ endereco.cep }}</div>
               <div>CIDADE: {{ endereco.cidade }}</div>
               <div>RUA: {{ endereco.rua }}</div>
@@ -30,6 +31,7 @@
 
 <script>
 import Navegacao from './Navegacao.vue'
+import servicoEndereco from '../servico/servicoEndereco';
 
 export default {
   name: "Home",
@@ -37,6 +39,12 @@ export default {
     return {
       enderecos: this.$store.state.enderecos,
     }
+  },
+  mounted(){
+    servicoEndereco.listar().then(resposta =>{
+      this.$store.state.enderecos = resposta.data
+      this.enderecos = this.$store.state.enderecos
+    })
   },
   components: {
     Navegacao
