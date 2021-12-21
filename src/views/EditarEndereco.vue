@@ -97,10 +97,10 @@
 </template>
 
 <script>
-import axios from "axios";
+
 import Navegacao from "../views/Navegacao.vue";
 import NavegacaoEndereco from "../views/NavegacaoEndereco.vue";
-import servicoEndereco from "../servico/servicoEndereco";
+import enderecoService from "../services/enderecoService";
 
 export default {
   name: "EditarEndereco",
@@ -121,7 +121,7 @@ export default {
     };
   },
   mounted() {
-    servicoEndereco.listar().then((resposta) => {
+    enderecoService.listar().then((resposta) => {
       this.$store.state.enderecos = resposta.data;
       this.enderecos = this.$store.state.enderecos;
     });
@@ -132,22 +132,16 @@ export default {
         alert("Selecione um ID!");
       } else {
         this.endereco.id = this.selected;
-        console.log(this.endereco);
-        axios({
-          url: "http://localhost:8080/endereco-vue/editar",
-          data: this.endereco,
-          method: "POST",
-          responseType: "json",
+
+        enderecoService.atualizar(this.endereco)
+        .then(() => {
+          alert("Endereço editado com sucesesso!");
         })
-          .then((res) => {
-            alert("Endereço editado com sucesesso!");
-            res;
-          })
-          .catch((erro) => {
-            erro;
-            alert("Erro ao editar endereço");
-          });
+        .catch(() => {
+          alert("Erro ao editar endereço");
+        });
       }
+
       this.selected == "",
         (this.endereco.cep = ""),
         (this.endereco.numero = ""),
@@ -159,6 +153,7 @@ export default {
       this.router("/");
     },
   },
+
   components: {
     Navegacao,
     NavegacaoEndereco,
@@ -167,9 +162,8 @@ export default {
 </script>
 
 <style>
-.jumbotron,
-.card {
-  margin-left: 30px;
-  margin-right: 30px;
-}
+  .jumbotron, .card {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
 </style>

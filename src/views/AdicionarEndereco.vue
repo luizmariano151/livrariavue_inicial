@@ -62,11 +62,12 @@
 </template>
 
 <script>
-import axios from "axios";
+
 import mutations from "../store/mutations"
 import state from '../store/state'
 import Navegacao from "../views/Navegacao.vue";
 import NavegacaoEndereco from '../views/NavegacaoEndereco.vue'
+import enderecoService from '../services/enderecoService';
 
 export default {
   name: "AdicionarEndereco",
@@ -83,27 +84,28 @@ export default {
   }),
   methods: {
     adicionar() {
-      axios({
-        url: "http://localhost:8080/endereco-vue/adicionar",
-        data: this.endereco,
-        method: "POST",
-        responseType: "json",
-      }).then((res) => {
+      
+      enderecoService.cadastrar(this.endereco)
+      .then((res) => {
+        this.limpar();
         alert('Endereço adicionado com sucesesso!');
-        mutations.adiciona_endereco(state,res.data)
-      }).catch((erro) => {
-        erro
+        mutations.adiciona_endereco(state,res.data);
+      }).catch(() => {
         alert('Erro ao adicionar endereço');
       })
-      this.endereco.cep = "",
-      this.endereco.numero = "",
-      this.endereco.cidade = "",
-      this.endereco.estado = "",
-      this.endereco.bairro = "",
-      this.endereco.rua = "",
-      this.endereco.complemento = ""
     },
+
+    limpar() {
+      this.endereco.cep = '';
+      this.endereco.numero = '';
+      this.endereco.cidade = '';
+      this.endereco.estado = '';
+      this.endereco.bairro = '';
+      this.endereco.rua = '';
+      this.endereco.complemento = '';
+    }
   },
+
   components: {
     Navegacao,
     NavegacaoEndereco,
@@ -112,9 +114,8 @@ export default {
 </script>
 
 <style>
-.jumbotron,
-.card {
-  margin-left: 30px;
-  margin-right: 30px;
-}
+  .jumbotron, .card {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
 </style>

@@ -31,45 +31,54 @@
 </template>
 
 <script>
-import axios from "axios";
+
+import enderecoService from "../services/enderecoService";
 import Navegacao from "../views/Navegacao.vue";
 import NavegacaoEndereco from "../views/NavegacaoEndereco.vue";
-import servicoEndereco from "../servico/servicoEndereco";
+
 
 export default {
   name: "ExcluirEndereco",
+
   data() {
     return {
       enderecos: this.$store.state.enderecos,
       selected: "",
-      user: {
-        id: "",
-      },
     };
   },
+
   mounted() {
-    servicoEndereco.listar().then((resposta) => {
-      this.$store.state.enderecos = resposta.data;
-      this.enderecos = this.$store.state.enderecos;
-    });
+    this.listarEnderecos();
   },
+
   methods: {
+
+    listarEnderecos() {
+      enderecoService.listar().then((resposta) => {
+        this.$store.state.enderecos = resposta.data;
+        this.enderecos = this.$store.state.enderecos;
+      });
+    },
+
     excluir() {
       if (this.selected == '') {
           alert('Escolha um id')
       } else {
-        this.user.id = this.selected;
-        axios({
-          url: "http://localhost:8080/endereco-vue/excluir",
-          data: this.user,
-          method: "POST",
-          responseType: "json",
-        });
-        this.selected = ''
-        alert('Endereço excluido!');
+        enderecoService.deletar(this.selected)
+        .then(
+          () => {
+            this.listarEnderecos();
+            alert('Endereço excluido!');
+          }
+        ).catch(
+          () => {
+            alert('Erro ao excluir endereço');
+          }
+        );
       }
     },
   },
+
   components: {
     Navegacao,
     NavegacaoEndereco,
@@ -78,9 +87,8 @@ export default {
 </script>
 
 <style>
-.jumbotron,
-.card {
-  margin-left: 30px;
-  margin-right: 30px;
-}
+  .jumbotron, .card {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
 </style>

@@ -30,8 +30,8 @@
 </template>
 
 <script>
-import Navegacao from './Navegacao.vue'
-import servicoEndereco from '../servico/servicoEndereco';
+import Navegacao from './Navegacao.vue';
+import enderecoService from "../services/enderecoService";
 
 export default {
   name: "Home",
@@ -41,7 +41,7 @@ export default {
     }
   },
   mounted(){
-    servicoEndereco.listar().then(resposta =>{
+    enderecoService.listar().then(resposta =>{
       this.$store.state.enderecos = resposta.data
       this.enderecos = this.$store.state.enderecos
     })

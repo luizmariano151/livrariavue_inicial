@@ -12,6 +12,5 @@ export default {
         },
     ],
     logado:false,
-    profile: null,
-    token: null
+    profile: null
 }

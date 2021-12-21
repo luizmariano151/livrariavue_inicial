@@ -2,78 +2,89 @@
   <div id="container-login" class="container">
     <div class="card" id="card-login">
       <div class="card-body">
+        
         <h4 class="titulo">Login</h4>
+
         <form @submit.prevent="login">
           <div class="form-group">
-            <label for="exampleInputEmail1">Endereço de email</label>
+            <label for="input-email">Endereço de email</label>
             <input
+              id="input-email"
               type="text"
               class="form-control"
               v-model="user.username"
               placeholder="email"
             />
           </div>
+
           <div class="form-group">
-            <label for="exampleInputPassword1">Senha</label>
+            <label for="input-password">Senha</label>
             <input
+              id="input-password"
               v-model="user.password"
               type="password"
               class="form-control"
               placeholder="Senha"
             />
           </div>
+
           <button type="submit" class="btn btn-primary">Login</button>
         </form>
+
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import mutations from "../store/mutations"
-import state from '../store/state'
+
+import authService from "../services/authService";
+import mutations from "../store/mutations";
+import state from '../store/state';
 
 export default {
+
   name: "Login",
-  data: () => ({
+
+  data: () => ({   
     user: {
       username: "",
       password: "",
     },
-
   }),
+
   methods: {
+
     login() {
-      axios({
-        url: "http://localhost:8080/user/autenticar",
-        data: this.user,
-        method: "POST",
-        responseType: "json",
-      }).then((res) => {
+      authService.signIn(this.user)
+     .then((res) => {
         mutations.loginSucesso(state, res.data)
         this.$router.push("/");
-      }).catch((erro) => {
+      }).catch(() => {
         mutations.loginFailure(state)
-        erro
         alert('Erro na autenticação do usuário');
       })
-      this.user.username = "";
-      this.user.password = "";
-    },
+    }
+
   },
 };
 </script>
 
 <style>
-#container-login {
-  max-width: 600px;
-  margin-top: 15%;
-}
-#card-login {
-  background-color: aquamarine;
-}
-.titulo {
-  text-align: center;
-}
+  #container-login {
+    max-width: 600px;
+    margin-top: 15%;
+  }
+
+  #card-login {
+    background-color: aquamarine;
+  }
+
+  .titulo {
+    text-align: center;
+  }
+
+  .error {
+    border: 1px solid rgb(250, 74, 74);
+  }
 </style>
