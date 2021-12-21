@@ -21,8 +21,12 @@ export default {
         return http.delete(`/endereco/deletar/${id}`, config);
     },
 
-    listar: () => { 
-        return http.get("/endereco/consultar", config);
+    consultar: () => { 
+        return http.get('/endereco/consultar', config);
     },
+
+    listar: () => {
+        return http.get('/endereco/listar', config);
+    }
     
 }

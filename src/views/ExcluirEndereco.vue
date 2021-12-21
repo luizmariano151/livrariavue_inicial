@@ -54,7 +54,7 @@ export default {
   methods: {
 
     listarEnderecos() {
-      enderecoService.listar().then((resposta) => {
+      enderecoService.consultar().then((resposta) => {
         this.$store.state.enderecos = resposta.data;
         this.enderecos = this.$store.state.enderecos;
       });

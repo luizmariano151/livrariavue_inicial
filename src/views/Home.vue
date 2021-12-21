@@ -30,22 +30,48 @@
 </template>
 
 <script>
+
 import Navegacao from './Navegacao.vue';
 import enderecoService from "../services/enderecoService";
 
 export default {
   name: "Home",
+
   data() {
     return {
       enderecos: this.$store.state.enderecos,
     }
   },
+
   mounted(){
-    enderecoService.listar().then(resposta =>{
-      this.$store.state.enderecos = resposta.data
-      this.enderecos = this.$store.state.enderecos
-    })
+
+  if(!this.$store.state.logado) {
+      enderecoService.listar().then(resposta =>{
+        this.$store.state.enderecos = resposta.data;
+        this.enderecos = this.$store.state.enderecos;
+      })
+    } else {
+       enderecoService.consultar().then(resposta =>{
+          this.$store.state.enderecos = resposta.data;
+          this.enderecos = this.$store.state.enderecos;
+      }).catch(() => {
+        this.enderecos = [
+        {
+            id:"",
+            cep: "",
+            cidade: "",
+            rua:"",
+            numero: 0,
+            bairro:"",
+            estado:"",
+            complemento:""
+        },
+      ];
+      });
+    }
+
   },
+
   components: {
     Navegacao
   },

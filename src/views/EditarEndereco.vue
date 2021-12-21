@@ -120,12 +120,14 @@ export default {
       },
     };
   },
+
   mounted() {
-    enderecoService.listar().then((resposta) => {
+    enderecoService.consultar().then((resposta) => {
       this.$store.state.enderecos = resposta.data;
       this.enderecos = this.$store.state.enderecos;
     });
   },
+  
   methods: {
     editar() {
       if (this.selected == "") {
