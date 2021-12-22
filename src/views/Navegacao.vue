@@ -32,16 +32,16 @@
 </template>
 
 <script>
-export default {
-  name: "Navegacao",
-  data() {
-    return {};
-  },
-};
+  export default {
+    name: "Navegacao",
+    data() {
+      return {};
+    },
+  };
 </script>
 
 <style>
-.barra {
-  background-color: aquamarine;
-}
+  .barra {
+    background-color: aquamarine;
+  }
 </style>

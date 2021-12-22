@@ -1,11 +1,12 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import Login from '../views/Login.vue'
-import store from '@/store'
-import Navegacao from '../views/Navegacao.vue'
-import AdicionarEndereco from '../views/AdicionarEndereco.vue'
-import EditarEndereco from '../views/EditarEndereco.vue'
-import ExcluirEndereco from '../views/ExcluirEndereco.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import Home from '../views/Home.vue';
+import Login from '../views/Login.vue';
+import store from '@/store';
+import Navegacao from '../views/Navegacao.vue';
+import AdicionarEndereco from '../views/AdicionarEndereco.vue';
+import EditarEndereco from '../views/EditarEndereco.vue';
+import ExcluirEndereco from '../views/ExcluirEndereco.vue';
+import CadastrarUser from '../views/CadastrarUser.vue';
 
 const routes = [
   {
@@ -17,6 +18,11 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login
+  },
+  {
+    path: '/cadastrar',
+    name: 'cadastrar',
+    component: CadastrarUser
   },
   {
     path: '/navegacao',
@@ -46,7 +52,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/'];
+  const publicPages = ['/login', '/', '/cadastrar'];
   const authRequired = !publicPages.includes(to.path);
   const logado = store.state.logado;
 

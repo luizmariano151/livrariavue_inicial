@@ -29,6 +29,10 @@
           </div>
 
           <button type="submit" class="btn btn-primary">Login</button>
+          <span class="space"></span>
+          <router-link to="/cadastrar">
+              <button type="button" class="btn btn-primary">Cadastra-se</button>
+          </router-link>
         </form>
 
       </div>
@@ -84,7 +88,7 @@ export default {
     text-align: center;
   }
 
-  .error {
-    border: 1px solid rgb(250, 74, 74);
+  .space {
+    margin: 5px;
   }
 </style>
